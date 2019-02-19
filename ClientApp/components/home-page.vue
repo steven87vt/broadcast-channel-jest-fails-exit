@@ -55,9 +55,6 @@ export default {
       user.name = event.target.value;
 
       this.setUser(user);
-    },
-    junk() {
-      console.log("junk method executed");
     }
   },
   created() {
@@ -75,6 +72,15 @@ export default {
     //   console.log('broadcast channel refresh event)
     // }
     //}
+  },
+  async beforeDestroy () {
+    if(this.authChannel) {
+      console.log('before destroy executing and closing authChannel')
+      await this.authChannel.close()
+    }
+  },
+  destroyed() {
+    console.log('destroyed')
   }
 };
 </script>
