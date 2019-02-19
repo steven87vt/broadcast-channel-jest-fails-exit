@@ -4,14 +4,11 @@ import router from './router'
 import { sync } from 'vuex-router-sync'
 import { createStore } from './store/index'
 import bootstrap from 'bootstrap'
-import App from 'components/app-root'
+import App from './components/app-root'
 
 Vue.use(Vuex)
 
-const http = Vue.prototype.$http
-const storeOverrides = {}
-const store = createStore(http, storeOverrides)
-
+const store = createStore(Vue.prototype.$http)
 sync(store, router)
 
 const app = new Vue({
