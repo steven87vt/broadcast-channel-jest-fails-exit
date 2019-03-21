@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import merge from 'lodash/merge'
-// import BroadcastChannel from 'broadcast-channel'
+import BroadcastChannel from 'broadcast-channel'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
 import { createTestStore } from '../../../test-create'
@@ -11,13 +11,6 @@ import HomePage from '../home-page'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(VueRouter)
-
-// const eventObject = {
-//   $on: jest.fn(() => {
-//     console.log("Event.$on triggered");
-//     return Promise.resolve();
-//   })
-// };
 
 function createWrapper(overrides) {
   const defaults = {
@@ -31,15 +24,21 @@ function createWrapper(overrides) {
 
 describe('login.vue', () => {
   beforeEach(async () => {
-    /*
-     *let result = await BroadcastChannel.clearNodeFolder()s
-     *console.log('Login.vue - BeforeEach - node directories removed: ' + result)
-     */
+     let result = await BroadcastChannel.clearNodeFolder()
   })
 
-  test('login matches snapshot test.', () => {
+  test('login matches snapshot test.', async (done) => {
     const wrapper = createWrapper()
+    const closeMethodSpy = jest.spyOn(wrapper.vm.authChannel, 'close')
+
     expect(wrapper).toMatchSnapshot()
     wrapper.destroy()
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 500)
+    }).then(() => {
+      expect(closeMethodSpy).toHaveBeenCalled()
+      done()
+    })
   })
 })

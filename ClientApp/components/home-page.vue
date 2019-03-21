@@ -55,6 +55,9 @@ export default {
       user.name = event.target.value;
 
       this.setUser(user);
+    },
+    logBroadcastMessage(message){
+      console.log(JSON.stringify(message))
     }
   },
   created() {
@@ -63,15 +66,7 @@ export default {
     };
 
     this.authChannel = new BroadcastChannel("auth", authChannelOptions);
-
-    // this.authChannel.onmessage = function (e) {
-    // if (e.data.cmd === 'logout') {
-    //  console.log('broadcast channel logout event)
-    // }
-    // if (e.data.cmd === 'refresh') {
-    //   console.log('broadcast channel refresh event)
-    // }
-    //}
+    this.authChannel.onmessage = this.logBroadcastMessage
   },
   async beforeDestroy () {
     if(this.authChannel) {

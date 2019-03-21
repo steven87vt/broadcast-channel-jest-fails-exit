@@ -44,7 +44,7 @@
     "build:app:dev": "cross-env NODE_ENV=development BABEL_ENV=development webpack --progress --hide-modules",
     "build:vendor:dev": "cross-env NODE_ENV=development BABEL_ENV=development webpack --config webpack.config.vendor.js --progress",
     "start:dev": "cross-env NODE_ENV=webpackDevServer webpack-dev-server --hot --inline",
-    "test:unit": "jest --coverage"
+    "test:unit": "jest --runInBand"
   },
   "dependencies": {
     "@babel/polyfill": "~7.2.5",
